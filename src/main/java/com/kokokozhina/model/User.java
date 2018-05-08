@@ -25,7 +25,7 @@ public class User {
 //    @JoinTable(name = "User_roles", joinColumns = @JoinColumn(name = "User_id"),
 //            inverseJoinColumns = @JoinColumn(name = "Role_id"))
     @Column(name = "role")
-    private String role;
+    private Role role;
 
     public Long getId() {
         return id;
@@ -59,14 +59,13 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-
-//add equals
+    //add equals
 }

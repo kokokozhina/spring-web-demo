@@ -60,6 +60,7 @@
             <div class="form-group ${error != null ? 'has-error' : ''}">
                     <span>${error}</span>
             </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
             <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
         </form:form>
