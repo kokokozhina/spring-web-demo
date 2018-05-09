@@ -17,4 +17,7 @@ public interface UserService {
 
     User findByUsername(String username);
 
+    List<User> getAll();
+
+    void updateRoleByUsername(String username, String role);
 }

@@ -1,8 +1,10 @@
 package com.kokokozhina.controller;
 
+import com.kokokozhina.model.AdminPage;
 import com.kokokozhina.model.User;
 import com.kokokozhina.service.SecurityService;
 import com.kokokozhina.service.UserService;
+import com.kokokozhina.validation.AdminPageValidator;
 import com.kokokozhina.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+
+    @Autowired
+    private AdminPageValidator adminPageValidator;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -81,6 +86,29 @@ public class UserController {
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String admin(Model model) {
+        model.addAttribute("list", userService.getAll());
+        model.addAttribute("adminForm", new AdminPage());
         return "admin";
     }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.POST)
+    public String admin(@ModelAttribute("adminForm") AdminPage adminPage, BindingResult bindingResult, Model model) {
+        adminPageValidator.validate(adminPage, bindingResult);
+        userService.updateRoleByUsername(adminPage.getUsername(), adminPage.getRole());
+        model.addAttribute("list", userService.getAll());
+        return "admin";
+    }
+
+
+    @RequestMapping(value = "/logoutform", method = RequestMethod.GET)
+    public String logout() {
+        return "logoutform";
+    }
+
+    @RequestMapping(value = "/logoutform", method = RequestMethod.POST)
+    public String logout(Model model) {
+        SecurityContextHolder.clearContext();
+        return "redirect:/welcome";
+    }
+
 }

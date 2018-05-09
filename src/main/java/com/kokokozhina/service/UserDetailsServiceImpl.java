@@ -1,8 +1,7 @@
 package com.kokokozhina.service;
 
-import com.kokokozhina.dao.UserDao;
-import com.kokokozhina.model.Role;
 import com.kokokozhina.model.User;
+import com.kokokozhina.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,12 +17,12 @@ import java.util.Set;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findUserByUsername(username);
+        User user = userRepository.findUserByUsername(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 

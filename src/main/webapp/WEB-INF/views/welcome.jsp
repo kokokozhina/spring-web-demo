@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
@@ -21,21 +22,28 @@
 <div class="container">
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+        <%--<form id="logoutForm" method="POST" action="${contextPath}/logout">--%>
+            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
+        <%--</form>--%>
 
-        <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+        <h2 class="text-center">Welcome ${pageContext.request.userPrincipal.name} | <a href="${contextPath}/logoutform">Logout</a>
         </h2>
+
+        <sec:authorize access="hasAuthority('ADMIN')">
+            <h4 class="text-center"><a href="${contextPath}/admin">Admin configurations</a></h4>
+        </sec:authorize>
+
 
     </c:if>
 
     <c:if test="${pageContext.request.userPrincipal.name == null}">
 
-        <h2>Welcome to configurator!</h2>
+        <h2 class="text-center">Welcome to configurator!</h2>
         <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
         <h4 class="text-center"><a href="${contextPath}/login">Login</a></h4>
     </c:if>
+
+
 
 
 </div>
