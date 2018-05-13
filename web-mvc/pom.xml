@@ -17,29 +17,5 @@
             <groupId>spring-web-demo</groupId>
             <version>1.0</version>
         </dependency>
-
-        <dependency>
-            <artifactId>gitlab-client-impl</artifactId>
-            <groupId>spring-web-demo</groupId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <artifactId>git-client-api</artifactId>
-            <groupId>spring-web-demo</groupId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <artifactId>msgr-client-api</artifactId>
-            <groupId>spring-web-demo</groupId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <artifactId>slack-impl</artifactId>
-            <groupId>spring-web-demo</groupId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
 </project>

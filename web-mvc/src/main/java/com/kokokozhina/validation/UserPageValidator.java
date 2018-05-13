@@ -8,11 +8,11 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 @Component
-public class NotificationPropertyValidator implements Validator {
+public class UserPageValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
-        return NotificationPropertyValidator.class.equals(aClass);
+        return UserPageValidator.class.equals(aClass);
     }
 
     @Override

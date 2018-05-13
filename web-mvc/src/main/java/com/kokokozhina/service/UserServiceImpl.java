@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Spliterator;
@@ -44,6 +45,15 @@ public class UserServiceImpl implements UserService {
     public void updateRoleByUsername(String username, String role) {
         User user = findByUsername(username);
         user.setRole(Role.valueOf(role));
+        userRepository.save(user);
+    }
+
+    @PostConstruct
+    public void addFirstAdmin() {
+        User user = new User();
+        user.setUsername("root");
+        user.setPassword(bCryptPasswordEncoder.encode("password"));
+        user.setRole(Role.ADMIN);
         userRepository.save(user);
     }
 

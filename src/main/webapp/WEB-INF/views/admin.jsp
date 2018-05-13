@@ -45,29 +45,29 @@
 
 
 
-            <spring:bind path="username">
+            <%--<spring:bind path="username">--%>
                 <h3>Type username</h3>
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="username" class="form-control" placeholder="Username"
                                 autofocus="true"></form:input>
                     <form:errors path="username"></form:errors>
                 </div>
-            </spring:bind>
+            <%--</spring:bind>--%>
 
-            <spring:bind path="role">
+            <%--<spring:bind path="role">--%>
                 <table>
                     <tr>
                         <td>New role </td>
-                        <td><form:radiobutton path="role" value="USER"/>USER
-                            <form:radiobutton path="role" value="UNCHECKED"/>UNCHECKED</td>
-                            <form:radiobutton path="role" value="ADMIN"/>ADMIN</td>
+                        <td><form:radiobutton path="role" value="USER"/>USER</td>
+                        <td><form:radiobutton path="role" value="UNCHECKED"/>UNCHECKED</td>
+                        <td><form:radiobutton path="role" value="ADMIN"/>ADMIN</td>
                         <td><form:errors path="role" /></td>
                     </tr>
                     <tr>
                         <td><button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button></td>
                     </tr>
                 </table>
-            </spring:bind>
+            <%--</spring:bind>--%>
 
         </form:form>
 

@@ -4,11 +4,7 @@ import bot.Bot;
 import com.kokokozhina.model.NotificationProperty;
 import com.kokokozhina.model.UserPage;
 import com.kokokozhina.service.NotificationPropertyService;
-import com.kokokozhina.service.SecurityService;
-import com.kokokozhina.service.UserService;
-import com.kokokozhina.validation.AdminPageValidator;
-import com.kokokozhina.validation.NotificationPropertyValidator;
-import com.kokokozhina.validation.UserValidator;
+import com.kokokozhina.validation.UserPageValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,13 +20,17 @@ import java.io.IOException;
 public class UserController {
 
     @Autowired
-    private NotificationPropertyValidator notificationPropertyValidator;
+    private UserPageValidator userPageValidator;
 
     @Autowired
     private NotificationPropertyService notificationPropertyService;
 
     @Autowired
     private Bot bot;
+
+    public String redirectWithModel(Model model) throws IOException {
+        return "user";
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String user(Model model) throws IOException {
@@ -44,36 +44,12 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String user(@ModelAttribute("settingId") String id,
-                       @ModelAttribute("gitlabGroup") String gitlabGroup,
-                       @ModelAttribute("gitlabProject") String gitlabProject,
-                       @ModelAttribute("slackChannel") String slackChannel,
-                       @ModelAttribute("action") String action,
                        BindingResult bindingResult,
                        Model model) throws IOException {
-        switch (action) {
-            case "deleteSetting":
-                if (id != null && !id.isEmpty()) {
-                    notificationPropertyService.deleteById(Long.parseLong(id));
-                }
-                model.addAttribute("projects", null);
-                break;
-            case "chooseProject":
-                if (gitlabGroup == null && gitlabGroup.isEmpty()) {
-                    bindingResult.rejectValue("gitlabGroup", "This field is required.");
-                }
-
-                if (slackChannel == null && slackChannel.isEmpty()) {
-                    bindingResult.rejectValue("slackChannel", "This field is required.");
-                }
-                if (!bindingResult.hasErrors()) {
-                    model.addAttribute("projects", bot.getProjectsByGroupName(gitlabGroup));
-                } else {
-                    model.addAttribute("error", bindingResult.getAllErrors());
-                }
-                break;
+        if (id != null && !id.isEmpty()) {
+            notificationPropertyService.deleteById(Long.parseLong(id));
         }
-
-
+        model.addAttribute("projects", null);
         model.addAttribute("list", notificationPropertyService.getAll());
         model.addAttribute("userChangesForm", new UserPage());
         model.addAttribute("groups", bot.getGroups());
@@ -82,26 +58,39 @@ public class UserController {
         return "user";
     }
 
-    @RequestMapping(value = "/addSetting", method = RequestMethod.POST)
-    public String add(@ModelAttribute("gitlabGroup") String gitlabGroup,
-                       @ModelAttribute("gitlabProject") String gitlabProject,
-                       @ModelAttribute("slackChannel") String slackChannel,
+    @RequestMapping(value = "/chooseProject", method = RequestMethod.POST)
+    public String user(@ModelAttribute("userChangesForm") UserPage userPage,
                        BindingResult bindingResult,
                        Model model) throws IOException {
-        UserPage userPage = new UserPage(
-                gitlabGroup, gitlabProject, slackChannel);
-
-        notificationPropertyValidator.validate(userPage, bindingResult);
+        userPageValidator.validate(userPage, bindingResult);
         if (!bindingResult.hasErrors()) {
-            notificationPropertyService.save(
-                    new NotificationProperty(gitlabGroup, gitlabProject, slackChannel));
+            model.addAttribute("projects", bot.getProjectsByGroupName(userPage.getGitlabGroup()));
         }
 
         model.addAttribute("list", notificationPropertyService.getAll());
-        model.addAttribute("userChangesForm", new UserPage());
+        model.addAttribute("userChangesForm", userPage);
+        model.addAttribute("groups", bot.getGroups());
+        model.addAttribute("channels", bot.getChannels());
+        redirectWithModel(model);
+        return "user";
+    }
+
+    @RequestMapping(value = "/addSetting", method = RequestMethod.POST)
+    public String add(@ModelAttribute("userChangesForm") UserPage userPage,
+                      BindingResult bindingResult,
+                      Model model) throws IOException {
+        userPageValidator.validate(userPage, bindingResult);
+        if (!bindingResult.hasErrors()) {
+            notificationPropertyService.save(new NotificationProperty(
+                    userPage.getGitlabGroup(), userPage.getGitlabProject(), userPage.getSlackChannel()));
+            return "redirect:/user";
+        }
+        model.addAttribute("list", notificationPropertyService.getAll());
+        model.addAttribute("userChangesForm", userPage);
         model.addAttribute("groups", bot.getGroups());
         model.addAttribute("channels", bot.getChannels());
         model.addAttribute("projects", null);
+
 
         return "user";
     }

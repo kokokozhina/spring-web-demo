@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -87,6 +88,11 @@ public class MainController {
     public String logout(Model model) {
         SecurityContextHolder.clearContext();
         return "redirect:/welcome";
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public String handleException(Throwable t) {
+        return "redirect:/error";
     }
 
 }
