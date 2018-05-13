@@ -1,5 +1,0 @@
-package com.kokokozhina.model;
-
-public enum Role {
-    ADMIN, USER, ANONYMOUS;
-}

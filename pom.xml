@@ -6,7 +6,16 @@
 
     <groupId>spring-web-demo</groupId>
     <artifactId>spring-demo</artifactId>
+    <packaging>pom</packaging>
     <version>1.0</version>
+    <modules>
+        <module>slack-impl</module>
+        <module>msgr-client-api</module>
+        <module>gitlab-client-impl</module>
+        <module>git-client-api</module>
+        <module>bot</module>
+        <module>web-mvc</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -60,16 +69,16 @@
             <!--<version>4.0.2.RELEASE</version>-->
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.2.2.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.2.2.Final</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+            <!--<version>5.2.2.Final</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-entitymanager</artifactId>-->
+            <!--<version>5.2.2.Final</version>-->
+        <!--</dependency>-->
 
 
 
@@ -101,6 +110,11 @@
             <version>3.3.7</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
 
 
     </dependencies>

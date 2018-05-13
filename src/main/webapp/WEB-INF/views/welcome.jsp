@@ -33,6 +33,10 @@
             <h4 class="text-center"><a href="${contextPath}/admin">Admin configurations</a></h4>
         </sec:authorize>
 
+        <sec:authorize access="hasAnyAuthority('USER', 'ADMIN')">
+            <h4 class="text-center"><a href="${contextPath}/user">User configurations</a></h4>
+        </sec:authorize>
+
 
     </c:if>
 

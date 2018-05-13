@@ -26,21 +26,25 @@
 
 
 
-        <h3>Change role for user</h3>
-        <table cellpadding="10" border="1" width="80%">
-            <tr>
-                <th>Username</th>
-                <th>Current role</th>
-            </tr>
-            <c:forEach items="${list}" var="item">
-                <tr>
-                    <td>${item.username}</td>
-                    <td>${item.role}</td>
-                </tr>
-            </c:forEach>
-        </table>
-
         <form:form method="POST" modelAttribute="adminForm" class="form-signin">
+
+            <h3>Change role for user</h3>
+            <table cellpadding="10" border="1" width="80%">
+                <tr>
+                    <th>Username</th>
+                    <th>Current role</th>
+                </tr>
+                <c:forEach items="${list}" var="item">
+                    <tr>
+                        <td>${item.username}</td>
+                        <td>${item.role}</td>
+
+                    </tr>
+                </c:forEach>
+            </table>
+
+
+
             <spring:bind path="username">
                 <h3>Type username</h3>
                 <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -55,7 +59,8 @@
                     <tr>
                         <td>New role </td>
                         <td><form:radiobutton path="role" value="USER"/>USER
-                            <form:radiobutton path="role" value="ANONYMOUS"/>ANONYMOUS</td>
+                            <form:radiobutton path="role" value="UNCHECKED"/>UNCHECKED</td>
+                            <form:radiobutton path="role" value="ADMIN"/>ADMIN</td>
                         <td><form:errors path="role" /></td>
                     </tr>
                     <tr>
