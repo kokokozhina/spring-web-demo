@@ -13,6 +13,11 @@ public interface NotificationPropertyService {
 
     NotificationProperty findById(Long  id);
 
+    NotificationProperty findByGitlabGroupAndGitlabProjectAndSlackChannel(String gitlabGroup,
+                                                                          String gitlabProject,
+                                                                          String slackChannel);
+
+
     void deleteById(Long Id);
 
 }

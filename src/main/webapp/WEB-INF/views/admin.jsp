@@ -26,48 +26,66 @@
 
 
 
-        <form:form method="POST" modelAttribute="adminForm" class="form-signin">
+        <form:form method="POST" class="form-signin">
 
             <h3>Change role for user</h3>
-            <table cellpadding="10" border="1" width="80%">
+
+            <table cellpadding="10" border="1" width="100%" class="form-table">
                 <tr>
                     <th>Username</th>
                     <th>Current role</th>
+                    <th>Edit</th>
                 </tr>
-                <c:forEach items="${list}" var="item">
+                <c:forEach items="${list}" var="item" varStatus="loop">
                     <tr>
                         <td>${item.username}</td>
                         <td>${item.role}</td>
-
+                        <c:if test="${edit == null}">
+                            <td>
+                                <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                        name="editId" value="${item.username}" formaction="/admin/edit">Edit
+                                </button>
+                            </td>
+                        </c:if>
+                        <c:if test="${edit != null && edit == item.username}">
+                            <td>
+                                <input type="hidden" name="name" value="${edit}">
+                                <input type="radio" name="role" value="UNCHECKED">UNCHECKED
+                                <input type="radio" name="role" value="USER">USER
+                                <input type="radio" name="role" value="ADMIN">ADMIN
+                            </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
             </table>
 
+            <form:errors path="role" />
+
+            <c:if test="${edit != null}">
+                <h4> </h4>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" formaction="/admin">Submit</button></td>
+            </c:if>
 
 
-            <%--<spring:bind path="username">--%>
-                <h3>Type username</h3>
-                <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="text" path="username" class="form-control" placeholder="Username"
-                                autofocus="true"></form:input>
-                    <form:errors path="username"></form:errors>
-                </div>
-            <%--</spring:bind>--%>
+            <%--<h3>Type username</h3>--%>
+            <%--<div class="form-group ${status.error ? 'has-error' : ''}">--%>
+                <%--<form:input type="text" path="username" class="form-control" placeholder="Username"--%>
+                            <%--autofocus="true"></form:input>--%>
+                <%--<form:errors path="username"></form:errors>--%>
+            <%--</div>--%>
 
-            <%--<spring:bind path="role">--%>
-                <table>
-                    <tr>
-                        <td>New role </td>
-                        <td><form:radiobutton path="role" value="USER"/>USER</td>
-                        <td><form:radiobutton path="role" value="UNCHECKED"/>UNCHECKED</td>
-                        <td><form:radiobutton path="role" value="ADMIN"/>ADMIN</td>
-                        <td><form:errors path="role" /></td>
-                    </tr>
-                    <tr>
-                        <td><button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button></td>
-                    </tr>
-                </table>
-            <%--</spring:bind>--%>
+            <%--<table>--%>
+                <%--<tr>--%>
+                    <%--<td>New role </td>--%>
+                    <%--<td><form:radiobutton path="role" value="USER"/>USER</td>--%>
+                    <%--<td><form:radiobutton path="role" value="UNCHECKED"/>UNCHECKED</td>--%>
+                    <%--<td><form:radiobutton path="role" value="ADMIN"/>ADMIN</td>--%>
+                    <%--<td><form:errors path="role" /></td>--%>
+                <%--</tr>--%>
+                <%--<tr>--%>
+                    <%--<td><button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button></td>--%>
+                <%--</tr>--%>
+            <%--</table>--%>
 
         </form:form>
 

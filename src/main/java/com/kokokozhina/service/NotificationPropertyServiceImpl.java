@@ -41,6 +41,11 @@ public class NotificationPropertyServiceImpl implements NotificationPropertyServ
     }
 
     @Override
+    public NotificationProperty findByGitlabGroupAndGitlabProjectAndSlackChannel(String gitlabGroup, String gitlabProject, String slackChannel) {
+        return notificationPropertyRepository.findByGitlabGroupAndGitlabProjectAndSlackChannel(gitlabGroup, gitlabProject, slackChannel);
+    }
+
+    @Override
     public void deleteById(Long Id) {
         notificationPropertyRepository.deleteById(Id);
     }

@@ -85,12 +85,18 @@ public class UserController {
             if(userPage.getGitlabProject() == null || userPage.getGitlabProject().isEmpty()) {
                 List<String> projects = bot.getProjectsByGroupName(userPage.getGitlabGroup());
                 for (String project : projects) {
-                    notificationPropertyService.save(new NotificationProperty(
-                            userPage.getGitlabGroup(), project, userPage.getSlackChannel()));
+                    if(notificationPropertyService.findByGitlabGroupAndGitlabProjectAndSlackChannel(
+                            userPage.getGitlabGroup(), project, userPage.getSlackChannel()) == null) {
+                        notificationPropertyService.save(new NotificationProperty(
+                                userPage.getGitlabGroup(), project, userPage.getSlackChannel()));
+                    }
                 }
             } else {
-                notificationPropertyService.save(new NotificationProperty(
-                        userPage.getGitlabGroup(), userPage.getGitlabProject(), userPage.getSlackChannel()));
+                if(notificationPropertyService.findByGitlabGroupAndGitlabProjectAndSlackChannel(
+                        userPage.getGitlabGroup(), userPage.getGitlabProject(), userPage.getSlackChannel()) == null) {
+                    notificationPropertyService.save(new NotificationProperty(
+                            userPage.getGitlabGroup(), userPage.getGitlabProject(), userPage.getSlackChannel()));
+                }
             }
 
             return "redirect:/user";

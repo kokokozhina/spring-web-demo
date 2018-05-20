@@ -42,8 +42,9 @@
                         <td>${item.gitlabProject}</td>
                         <td>${item.slackChannel}</td>
                         <td>
-                            <input type="hidden" name="settingId" value="${item.id}">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit" formaction="/user">Delete</button>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                    name="settingId" value="${item.id}" formaction="/user">Delete
+                            </button>
                         </td>
                     </tr>
                 </c:forEach>

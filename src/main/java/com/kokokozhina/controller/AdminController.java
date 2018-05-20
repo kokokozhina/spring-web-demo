@@ -27,19 +27,45 @@ public class AdminController {
     @RequestMapping(method = RequestMethod.GET)
     public String admin(Model model) {
         model.addAttribute("list", userService.getAll());
-        model.addAttribute("adminForm", new AdminPage());
+        model.addAttribute("edit", null);
+        return "admin";
+    }
+
+//    model.addAttribute("adminForm", new AdminPage());
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String admin(@ModelAttribute("adminForm") AdminPage adminPage, BindingResult bindingResult, Model model) {
+//        adminPageValidator.validate(adminPage, bindingResult);
+//        if (!bindingResult.hasErrors()) {
+//            userService.updateRoleByUsername(adminPage.getUsername(), adminPage.getRole());
+//        }
+//        model.addAttribute("list", userService.getAll());
+//        return "admin";
+//    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String edit(@ModelAttribute("editId") String id, Model model) {
+
+        if (id != null && !id.isEmpty()) {
+            model.addAttribute("list", userService.getAll());
+            model.addAttribute("edit", id);
+            return "admin";
+        }
+        model.addAttribute("list", userService.getAll());
+        model.addAttribute("edit", null);
         return "admin";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String admin(@ModelAttribute("adminForm") AdminPage adminPage, BindingResult bindingResult, Model model) {
-        adminPageValidator.validate(adminPage, bindingResult);
-        if (!bindingResult.hasErrors()) {
-            userService.updateRoleByUsername(adminPage.getUsername(), adminPage.getRole());
+    public String admin(@ModelAttribute("name") String name,
+                        @ModelAttribute("role") String role, Model model) {
+
+        if (name != null && !name.isEmpty() &&
+                role != null && !role.isEmpty()) {
+            userService.updateRoleByUsername(name, role);
         }
         model.addAttribute("list", userService.getAll());
+        model.addAttribute("edit", null);
         return "admin";
     }
-
 
 }
