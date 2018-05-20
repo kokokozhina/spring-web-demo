@@ -1,7 +1,6 @@
 package com.kokokozhina.model;
 
 import javax.persistence.*;
-import java.util.Set;
 
 
 @Entity
