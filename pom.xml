@@ -123,6 +123,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--for java docs compilation-->
+        <dependency>
+            <groupId>javax.interceptor</groupId>
+            <artifactId>javax.interceptor-api</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -131,6 +138,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+
         </plugins>
     </build>
 </project>
