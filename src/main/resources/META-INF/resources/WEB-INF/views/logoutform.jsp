@@ -28,6 +28,7 @@
 <div class="container">
 
 
+    <h2 align="center">Are you sure you want to log out?</h2>
     <form:form method="POST" modelAttribute="logoutForm">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Logout</button>
